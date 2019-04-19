@@ -11,20 +11,20 @@ class App extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
   calculate() {
-    console.log(this.state.infix);
-    console.log(typeof(this.state.infix));
     const postfix = MyFn.infixToPostfix(this.state.infix);
-    console.log(postfix);
-    let calValue = MyFn.evalPostfix(postfix);
-    console.log(calValue);
-    this.setState({infix: calValue});
-    console.log(this.state.infix);
+    if(postfix.includes('(') === true){
+      alert("Invalid input with unmatching (), try again pls~");
+    }else{
+      let calValue = MyFn.evalPostfix(postfix);
+      this.setState({infix: calValue.toString()});
+    }
   }
   handleChange(event) {
-    this.setState({infix: event.target.infix});
+    this.setState({infix: event.target.value});
   }
   handleClick(i) {
-    let newInfix = this.state.infix + i;
+    let newInfix = this.state.infix + i.toString();
+    if(i === 'sin' || i === 'cos' || i === 'tan') newInfix += '(';
     this.setState({infix: newInfix});
   }
   renderButton(i) {
@@ -72,5 +72,3 @@ class App extends Component {
 }
 
 export default App;
-// <input type = "text" value = {this.state.value}
-//   onChange = {this.handleChange} />
