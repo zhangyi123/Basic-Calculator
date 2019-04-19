@@ -24,8 +24,15 @@ class App extends Component {
     this.setState({infix: event.target.value});
   }
   handleClick(i) {
-    let newInfix = this.state.infix + i.toString();
-    if(i === 'sin' || i === 'cos' || i === 'tan') newInfix += '(';
+    let newInfix;
+    if(i === 'Del'){
+        newInfix = this.state.infix.slice(0, -1);
+    }
+    else{
+      newInfix = this.state.infix + i.toString();
+      if(i === 'sin' || i === 'cos' || i === 'tan') newInfix += '(';
+    }
+
     this.setState({infix: newInfix});
   }
   renderButton(i) {
@@ -55,6 +62,9 @@ class App extends Component {
         {this.renderButton('.')}
         {this.renderButton('(')}
         {this.renderButton(')')}
+        <br />
+        {this.renderButton(0)}
+        {this.renderButton('Del')}
         <br />
       </div>
     );
