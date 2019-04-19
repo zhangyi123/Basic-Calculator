@@ -41,11 +41,29 @@ export function evalPostfix(postfix) {
 	}
 	return stack.pop();
 }
-
+function checkNeg(infix) { //return a modified infix which understands neg numbers
+	let negPos = [];
+	let negLen = 0;
+	for(let i = 0; i < infix.length; i++) {
+			if(infix[i] === '-'){
+				let prev = i - 1;
+				while(prev >= 0 && infix[prev] === ' ') prev--;
+				if(prev < 0 || infix[prev] === '(') { //negative sign either at the beginning or after a '('
+					negPos.push(i + negLen);
+					negLen++;
+				}
+			}
+	}
+	for(let i = 0; i < negPos.length; i++) {
+		infix = infix.slice(0,negPos[i]) + '0' +infix.slice(negPos[i]);
+	}
+	return infix;
+}
 export function infixToPostfix(infix) {
 	let postfix='';
 	let stack = [];
-	for(let i=0; i < infix.length; i++) {
+	infix = checkNeg(infix);
+	for(let i = 0; i < infix.length; i++) {
 		if(infix[i] === ' ') continue;
 		if((isNaN(infix[i]) === false && infix[i] !== ' ')  || infix[i] === '.') { //a number
 			let startIndex = i;

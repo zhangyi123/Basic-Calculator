@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from './Button';
 import * as MyFn from './calculations.js'
+import './App.css';
 
 class App extends Component {
   constructor(props) {
@@ -12,8 +13,8 @@ class App extends Component {
   }
   calculate() {
     const postfix = MyFn.infixToPostfix(this.state.infix);
-    if(postfix.includes('(') === true){
-      alert("Invalid input with unmatching (), try again pls~");
+    if(postfix === '' || postfix.includes('(') === true){
+      alert("Invalid input try again pls~");
     }else{
       let calValue = MyFn.evalPostfix(postfix);
       this.setState({infix: calValue.toString()});
